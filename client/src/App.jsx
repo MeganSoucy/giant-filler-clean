@@ -14,14 +14,14 @@ function App() {
         style={{ '--board-size': BOARD_SIZE }}
         aria-label="Random 24 by 24 color board"
       >
-        {/* Render each saved color as one square tile. */}
+        {/* Render each saved tile as one square. */}
         {board.map((row, rowIndex) =>
-          row.map((color, columnIndex) => (
+          row.map((tile, columnIndex) => (
             <div
               className="tile"
               key={`${rowIndex}-${columnIndex}`}
-              style={{ backgroundColor: color }}
-              aria-label={`Row ${rowIndex + 1}, column ${columnIndex + 1}`}
+              style={{ backgroundColor: tile.color }}
+              aria-label={`Row ${rowIndex + 1}, column ${columnIndex + 1}, owner ${tile.owner ?? 'unclaimed'}`}
             />
           )),
         )}
