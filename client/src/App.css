@@ -4,23 +4,168 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 20px;
   justify-content: center;
   min-height: 100svh;
   padding: 24px;
   width: 100%;
 }
 
+.game-screen h1 {
+  margin: 0;
+  text-align: center;
+}
+
+.game-layout {
+  align-items: center;
+  display: grid;
+  gap: clamp(10px, 1.5vw, 20px);
+  grid-template-areas: 'player-one board player-two';
+  grid-template-columns: max-content minmax(0, auto) max-content;
+  justify-content: center;
+  max-width: 100%;
+  width: fit-content;
+}
+
 .board {
-  /* The board grows and shrinks with the viewport, but always stays square. */
   aspect-ratio: 1;
   display: grid;
+  grid-area: board;
   grid-template-columns: repeat(var(--board-size), 1fr);
-  width: min(88vmin, 820px);
+  justify-self: center;
+  width: min(86vmin, 980px, calc(100vw - 296px));
 }
 
 .tile {
-  /* Every tile keeps the same width and height. */
   aspect-ratio: 1;
   box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.2);
+  min-width: 0;
+  position: relative;
+}
+
+.tile--player-one,
+.tile--player-two {
+  box-shadow:
+    inset 0 0 0 2px #ffffff,
+    inset 0 0 0 4px #0f172a;
+  z-index: 1;
+}
+
+.tile--player-one::after,
+.tile--player-two::after {
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid #0f172a;
+  border-radius: 50%;
+  color: #0f172a;
+  content: attr(data-marker);
+  display: flex;
+  font-size: clamp(0.35rem, 0.8vw, 0.7rem);
+  font-weight: 800;
+  height: 70%;
+  justify-content: center;
+  left: 15%;
+  line-height: 1;
+  position: absolute;
+  top: 15%;
+  width: 70%;
+}
+
+.player-panel {
+  align-items: center;
+  background: #1e293b;
+  border: 1px solid #475569;
+  border-radius: 12px;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px;
+}
+
+.player-panel h2 {
+  color: #f8fafc;
+  font-size: 1rem;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.player-panel--one {
+  align-self: start;
+  grid-area: player-one;
+}
+
+.player-panel--two {
+  align-self: end;
+  grid-area: player-two;
+}
+
+.color-choices {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.color-button {
+  border: 2px solid rgba(255, 255, 255, 0.85);
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  height: 48px;
+  padding: 0;
+  width: 48px;
+}
+
+.color-button:focus-visible {
+  outline: 3px solid #ffffff;
+  outline-offset: 3px;
+}
+
+@media (max-width: 760px) {
+  .game-screen {
+    gap: 12px;
+    justify-content: flex-start;
+    padding: 12px;
+  }
+
+  .game-screen h1 {
+    font-size: clamp(1.5rem, 7vw, 2.25rem);
+  }
+
+  .game-layout {
+    gap: 12px;
+    grid-template-areas:
+      'player-one'
+      'board'
+      'player-two';
+    grid-template-columns: minmax(0, 1fr);
+    width: min(100%, 820px);
+  }
+
+  .board {
+    width: 100%;
+  }
+
+  .player-panel {
+    gap: 8px;
+    justify-self: stretch;
+    padding: 8px 10px;
+  }
+
+  .player-panel--one,
+  .player-panel--two {
+    align-self: auto;
+  }
+
+  .color-choices {
+    flex-direction: row;
+    gap: 6px;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .color-button {
+    height: clamp(40px, 12vw, 48px);
+    width: clamp(40px, 12vw, 48px);
+  }
 }
